@@ -1,16 +1,21 @@
 ﻿// =============================================================================
-// KAIROS FRONTEND - VITE CONFIGURATION
+// KAIROS FRONTEND - WORKING VITE CONFIGURATION FOR TAILWIND V4
 // =============================================================================
 // Author: Sankhadeep Banerjee
 // Project: Kairos - Marketing Decisioning Solution
+// File: vite.config.ts
 // =============================================================================
 
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import tailwindcss from '@tailwindcss/vite';
 import path from 'path';
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    tailwindcss() // Tailwind v4 plugin
+  ],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
