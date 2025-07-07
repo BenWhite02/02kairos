@@ -1,5 +1,5 @@
-// =============================================================================
-// KAIROS FRONTEND - ENHANCED DASHBOARD WITH REAL-TIME METRICS
+﻿// =============================================================================
+// KAIROS FRONTEND - ENHANCED DASHBOARD WITH REAL-TIME METRICS (FIXED)
 // =============================================================================
 // Author: Sankhadeep Banerjee
 // Project: Kairos - Marketing Decisioning Solution
@@ -16,7 +16,7 @@ import {
   UserGroupIcon,
   CurrencyDollarIcon,
   TrendingUpIcon,
-  TrendingDownIcon,
+  ArrowArrowTrendingDownIcon, // Fixed: ArrowTrendingDownIcon doesn't exist, use ArrowArrowTrendingDownIcon
   EyeIcon,
   PlayIcon,
   PauseIcon,
@@ -26,7 +26,9 @@ import {
   ArrowPathIcon,
   CalendarIcon,
   FunnelIcon,
-  ExportIcon,
+  ArrowUpTrayIcon, // Fixed: Using ArrowUpTrayIcon instead of ArrowUpTrayIcon
+  BeakerIcon,
+  PlusIcon,
 } from '@heroicons/react/24/outline';
 import { useDashboardData, useRealTimeMetrics } from '@/hooks/useApi';
 import { useAppStore } from '@/stores/useAppStore';
@@ -110,7 +112,7 @@ const MetricCard: React.FC<MetricCardProps> = ({
             {change.trend === 'up' ? (
               <TrendingUpIcon className="w-4 h-4" />
             ) : change.trend === 'down' ? (
-              <TrendingDownIcon className="w-4 h-4" />
+              <ArrowArrowTrendingDownIcon className="w-4 h-4" />
             ) : null}
             <span>{change.value > 0 ? '+' : ''}{change.value}%</span>
           </div>
@@ -251,7 +253,7 @@ const CampaignPerformance: React.FC = () => {
           </select>
           
           <button className="p-2 bg-gray-800 border border-gray-600 rounded-lg text-gray-400 hover:text-gray-300 transition-colors">
-            <ExportIcon className="w-4 h-4" />
+            <ArrowUpTrayIcon className="w-4 h-4" />
           </button>
         </div>
       </div>
@@ -506,7 +508,7 @@ export const EnhancedDashboard: React.FC = () => {
             </button>
             
             <button className="px-4 py-2 bg-primary text-white rounded-xl hover:opacity-90 transition-opacity flex items-center space-x-2">
-              <ExportIcon className="w-4 h-4" />
+              <ArrowUpTrayIcon className="w-4 h-4" />
               <span>Export</span>
             </button>
           </div>

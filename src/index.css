@@ -1,332 +1,67 @@
-/* =============================================================================
- * KAIROS FRONTEND - WORKING INDEX.CSS FOR TAILWIND V4
- * =============================================================================
- * Author: Sankhadeep Banerjee
- * Project: Kairos - Marketing Decisioning Solution
- * File: src/index.css
- * ============================================================================= */
+﻿@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
 
-/* Import Inter font FIRST */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
-
-/* Then import Tailwind */
-@import "tailwindcss";
-
-/* CSS Custom Properties for Deep Black Theme */
 :root {
-  /* Deep Black Theme Colors */
-  --color-primary: #00d9ff;
-  --color-secondary: #ff6b9d;
-  --color-accent: #00ff88;
-  --color-background: #000000;
-  --color-surface: #0a0a0a;
-  --color-surface-elevated: #111111;
-  --color-text: #ffffff;
-  --color-text-secondary: #b0b0b0;
-  --color-text-muted: #808080;
-  --color-border: #1a1a1a;
-  --color-border-elevated: #2a2a2a;
-  --color-success: #00ff88;
-  --color-warning: #ffb800;
-  --color-error: #ff4757;
-  --color-info: #00d9ff;
-}
-
-/* Base styles with deep black background */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+  --color-primary: 59 130 246;
+  --color-secondary: 139 92 246;
+  --color-accent: 6 182 212;
+  --color-background: 15 23 42;
+  --color-surface: 30 41 59;
+  --color-text: 248 250 252;
 }
 
 html {
   scroll-behavior: smooth;
-  font-feature-settings: 'cv11', 'ss01';
-  font-variation-settings: 'opsz' 32;
 }
 
 body {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  background-color: #000000;
-  color: #ffffff;
+  font-family: 'Inter', system-ui, sans-serif;
+  background: rgb(var(--color-background));
+  color: rgb(var(--color-text));
   line-height: 1.6;
-  font-weight: 400;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-  margin: 0;
-  min-height: 100vh;
+}
+
+/* Theme classes */
+.kairos-theme-kairos-dark {
+  --color-primary: 59 130 246;
+  --color-secondary: 139 92 246;
+  --color-accent: 6 182 212;
+  --color-background: 15 23 42;
+  --color-surface: 30 41 59;
+  --color-text: 248 250 252;
+}
+
+.kairos-theme-kairos-light {
+  --color-primary: 37 99 235;
+  --color-secondary: 124 58 237;
+  --color-accent: 8 145 178;
+  --color-background: 255 255 255;
+  --color-surface: 248 250 252;
+  --color-text: 15 23 42;
+}
+
+@layer components {
+  .card {
+    @apply bg-gray-900/50 backdrop-blur-xl border border-gray-800 rounded-2xl p-6;
+  }
   
-  /* Deep black background with sophisticated pattern */
-  background-image: 
-    radial-gradient(circle at 2px 2px, rgba(255,255,255,0.05) 1px, transparent 0),
-    linear-gradient(45deg, rgba(0, 217, 255, 0.02) 0%, transparent 30%),
-    linear-gradient(-45deg, rgba(255, 107, 157, 0.02) 0%, transparent 30%);
-  background-size: 40px 40px, 200% 200%, 200% 200%;
-  background-position: 0 0, 0% 0%, 100% 100%;
-  animation: subtle-shift 60s ease-in-out infinite;
+  .btn-primary {
+    @apply bg-blue-500 text-white hover:bg-blue-600 transition-colors px-4 py-2 rounded-lg;
+  }
 }
 
-@keyframes subtle-shift {
-  0%, 100% { background-position: 0 0, 0% 0%, 100% 100%; }
-  50% { background-position: 20px 20px, 100% 100%, 0% 0%; }
-}
-
-/* Enhanced glass morphism cards */
-.glass {
-  background: rgba(8, 8, 8, 0.95);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 
-    0 8px 32px rgba(0, 0, 0, 0.7),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
-}
-
-/* Enhanced card styles */
-.card {
-  background: rgba(8, 8, 8, 0.95);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 1rem;
-  padding: 1.5rem;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.7);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  overflow: hidden;
-}
-
-.card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-}
-
-.card:hover {
-  border-color: rgba(0, 217, 255, 0.2);
-  transform: translateY(-2px);
-  box-shadow: 
-    0 16px 48px rgba(0, 0, 0, 0.8),
-    0 0 30px rgba(0, 217, 255, 0.1);
-}
-
-/* Stat card specific styling */
-.stat-card {
-  background: rgba(8, 8, 8, 0.95);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 1rem;
-  padding: 1.5rem;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.7);
-}
-
-.stat-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-
-.stat-card:hover {
-  transform: translateY(-4px);
-  border-color: rgba(0, 217, 255, 0.3);
-  box-shadow: 
-    0 16px 48px rgba(0, 0, 0, 0.8),
-    0 0 40px rgba(0, 217, 255, 0.15);
-}
-
-.stat-card:hover::before {
-  opacity: 1;
-}
-
-/* Button styles */
-.btn-primary {
-  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
-  color: white;
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.75rem;
-  border: none;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 
-    0 4px 16px rgba(0, 0, 0, 0.7),
-    0 0 0 1px rgba(255, 255, 255, 0.1) inset;
-  position: relative;
-  overflow: hidden;
-}
-
-.btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 
-    0 8px 24px rgba(0, 0, 0, 0.8),
-    0 0 20px rgba(0, 217, 255, 0.3),
-    0 0 0 1px rgba(255, 255, 255, 0.15) inset;
-}
-
-.btn-secondary {
-  background: rgba(0, 217, 255, 0.1);
-  color: var(--color-primary);
-  border: 1px solid rgba(0, 217, 255, 0.3);
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.75rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-}
-
-.btn-secondary:hover {
-  background: rgba(0, 217, 255, 0.2);
-  border-color: rgba(0, 217, 255, 0.5);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
-}
-
-/* Progress bars with glow */
-.progress-bar {
-  width: 100%;
-  height: 0.5rem;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 0.25rem;
-  overflow: hidden;
-  position: relative;
-}
-
-.progress-fill {
-  height: 100%;
-  border-radius: 0.25rem;
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 0 10px currentColor;
-}
-
-/* Gradient text */
-.gradient-text {
-  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* Input field styles */
-.input-field {
-  width: 100%;
-  padding: 0.875rem 1rem;
-  background: rgba(10, 10, 10, 0.9);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 0.75rem;
-  color: var(--color-text);
-  font-size: 0.875rem;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-}
-
-.input-field:focus {
-  outline: none;
-  border-color: var(--color-primary);
-  box-shadow: 
-    0 0 0 3px rgba(0, 217, 255, 0.15),
-    0 4px 16px rgba(0, 0, 0, 0.5);
-  background: rgba(15, 15, 15, 0.95);
-}
-
-.input-field::placeholder {
-  color: var(--color-text-muted);
-}
-
-/* Scrollbar styling */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--color-surface);
+  background: rgb(var(--color-background));
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-border-elevated);
-  border-radius: 3px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--color-primary);
-  box-shadow: 0 0 5px var(--color-primary);
-}
-
-/* Utility classes */
-.text-glow {
-  text-shadow: 0 0 10px currentColor;
-}
-
-.glow-primary {
-  box-shadow: 0 0 20px rgba(0, 217, 255, 0.3);
-}
-
-.glow-secondary {
-  box-shadow: 0 0 20px rgba(255, 107, 157, 0.3);
-}
-
-/* Animation keyframes */
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
-
-@keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 20px rgba(0, 217, 255, 0.3); }
-  50% { box-shadow: 0 0 40px rgba(0, 217, 255, 0.6); }
-}
-
-@keyframes shimmer {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
-}
-
-/* Responsive design */
-@media (max-width: 768px) {
-  .card, .stat-card {
-    padding: 1rem;
-  }
-  
-  .btn-primary, .btn-secondary {
-    padding: 0.625rem 1.25rem;
-    font-size: 0.875rem;
-  }
-}
-
-/* High contrast mode support */
-@media (prefers-contrast: high) {
-  :root {
-    --color-border: #444444;
-    --color-text-secondary: #ffffff;
-  }
-}
-
-/* Reduced motion support */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
+  background: rgb(var(--color-surface));
+  border-radius: 4px;
 }

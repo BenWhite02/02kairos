@@ -1,260 +1,374 @@
 // =============================================================================
-// KAIROS FRONTEND - ENHANCED THEME CONTEXT WITH DEEP BLACK
+// KAIROS FRONTEND - THEME CONTEXT
 // =============================================================================
 // Author: Sankhadeep Banerjee
 // Project: Kairos - Marketing Decisioning Solution
 // File: src/contexts/ThemeContext.tsx
+// Purpose: Advanced theme management with multiple professional themes
 // =============================================================================
 
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
-// Enhanced theme configuration interface
-interface Theme {
-  name: string;
-  displayName: string;
-  description: string;
+// ============================================================================
+// THEME DEFINITIONS
+// ============================================================================
+
+export type ThemeName = 
+  | 'kairos-dark' 
+  | 'kairos-light' 
+  | 'kairos-purple' 
+  | 'kairos-blue' 
+  | 'kairos-green' 
+  | 'kairos-orange';
+
+export interface ThemeColors {
   primary: string;
   secondary: string;
   accent: string;
-  background: string;
-  surface: string;
-  surfaceElevated: string;
-  surfaceGlass: string;
-  text: string;
-  textSecondary: string;
-  textMuted: string;
-  border: string;
-  borderElevated: string;
-  success: string;
-  warning: string;
-  error: string;
-  info: string;
-  // Enhanced visual properties
-  glowIntensity: number;
-  patternIntensity: number;
-  gradients: {
+  background: {
     primary: string;
-    surface: string;
-    pattern: string;
+    secondary: string;
+    tertiary: string;
   };
-  shadows: {
-    sm: string;
-    md: string;
-    lg: string;
-    xl: string;
-    glow: string;
+  text: {
+    primary: string;
+    secondary: string;
+    muted: string;
+  };
+  border: {
+    primary: string;
+    secondary: string;
+  };
+  status: {
+    success: string;
+    warning: string;
+    error: string;
+    info: string;
   };
 }
 
-// Enhanced themes with deep black focus
-const themes: Record<string, Theme> = {
-  'kairos-deep-black': {
-    name: 'kairos-deep-black',
-    displayName: 'Kairos Deep Black',
-    description: 'Premium deep black theme with cyan accents',
-    primary: '#00d9ff',
-    secondary: '#ff6b9d',
-    accent: '#00ff88',
-    background: '#000000',
-    surface: '#0a0a0a',
-    surfaceElevated: '#111111',
-    surfaceGlass: 'rgba(8, 8, 8, 0.95)',
-    text: '#ffffff',
-    textSecondary: '#b0b0b0',
-    textMuted: '#808080',
-    border: '#1a1a1a',
-    borderElevated: '#2a2a2a',
-    success: '#00ff88',
-    warning: '#ffb800',
-    error: '#ff4757',
-    info: '#00d9ff',
-    glowIntensity: 0.3,
-    patternIntensity: 0.05,
-    gradients: {
-      primary: 'linear-gradient(135deg, #00d9ff, #ff6b9d)',
-      surface: 'linear-gradient(135deg, rgba(10, 10, 10, 0.98), rgba(20, 20, 20, 0.95))',
-      pattern: 'radial-gradient(circle at 2px 2px, rgba(255,255,255,0.05) 1px, transparent 0), linear-gradient(45deg, rgba(0, 217, 255, 0.02) 0%, transparent 30%), linear-gradient(-45deg, rgba(255, 107, 157, 0.02) 0%, transparent 30%)',
+export interface Theme {
+  name: ThemeName;
+  displayName: string;
+  colors: ThemeColors;
+  cssVariables: Record<string, string>;
+}
+
+// ============================================================================
+// THEME CONFIGURATIONS
+// ============================================================================
+
+const themes: Record<ThemeName, Theme> = {
+  'kairos-dark': {
+    name: 'kairos-dark',
+    displayName: 'Kairos Dark',
+    colors: {
+      primary: '#3B82F6',      // Blue-500
+      secondary: '#8B5CF6',    // Violet-500
+      accent: '#06B6D4',       // Cyan-500
+      background: {
+        primary: '#0F172A',    // Slate-900
+        secondary: '#1E293B',  // Slate-800
+        tertiary: '#334155',   // Slate-700
+      },
+      text: {
+        primary: '#F8FAFC',    // Slate-50
+        secondary: '#CBD5E1',  // Slate-300
+        muted: '#64748B',      // Slate-500
+      },
+      border: {
+        primary: '#374151',    // Gray-700
+        secondary: '#4B5563',  // Gray-600
+      },
+      status: {
+        success: '#10B981',    // Emerald-500
+        warning: '#F59E0B',    // Amber-500
+        error: '#EF4444',      // Red-500
+        info: '#3B82F6',       // Blue-500
+      },
     },
-    shadows: {
-      sm: '0 1px 3px rgba(0, 0, 0, 0.8)',
-      md: '0 4px 12px rgba(0, 0, 0, 0.7)',
-      lg: '0 8px 24px rgba(0, 0, 0, 0.6)',
-      xl: '0 16px 48px rgba(0, 0, 0, 0.5)',
-      glow: '0 0 20px rgba(0, 217, 255, 0.3)',
-    },
-  },
-  'cyber-neon': {
-    name: 'cyber-neon',
-    displayName: 'Cyber Neon',
-    description: 'High-contrast cyberpunk aesthetic',
-    primary: '#ff0080',
-    secondary: '#00ffff',
-    accent: '#ffff00',
-    background: '#000000',
-    surface: '#0f0f0f',
-    surfaceElevated: '#1a1a1a',
-    surfaceGlass: 'rgba(15, 15, 15, 0.95)',
-    text: '#ffffff',
-    textSecondary: '#cccccc',
-    textMuted: '#999999',
-    border: '#333333',
-    borderElevated: '#444444',
-    success: '#00ff00',
-    warning: '#ffaa00',
-    error: '#ff0040',
-    info: '#0080ff',
-    glowIntensity: 0.5,
-    patternIntensity: 0.08,
-    gradients: {
-      primary: 'linear-gradient(135deg, #ff0080, #00ffff)',
-      surface: 'linear-gradient(135deg, rgba(15, 15, 15, 0.98), rgba(30, 30, 30, 0.95))',
-      pattern: 'radial-gradient(circle at 2px 2px, rgba(255,0,128,0.08) 1px, transparent 0), linear-gradient(45deg, rgba(255, 0, 128, 0.03) 0%, transparent 30%), linear-gradient(-45deg, rgba(0, 255, 255, 0.03) 0%, transparent 30%)',
-    },
-    shadows: {
-      sm: '0 1px 3px rgba(255, 0, 128, 0.3)',
-      md: '0 4px 12px rgba(255, 0, 128, 0.4)',
-      lg: '0 8px 24px rgba(255, 0, 128, 0.5)',
-      xl: '0 16px 48px rgba(255, 0, 128, 0.6)',
-      glow: '0 0 25px rgba(255, 0, 128, 0.5)',
+    cssVariables: {
+      '--color-primary': '59 130 246',
+      '--color-secondary': '139 92 246',
+      '--color-accent': '6 182 212',
+      '--color-background': '15 23 42',
+      '--color-surface': '30 41 59',
+      '--color-text': '248 250 252',
     },
   },
-  'elegant-dark': {
-    name: 'elegant-dark',
-    displayName: 'Elegant Dark',
-    description: 'Sophisticated dark theme with purple accents',
-    primary: '#6366f1',
-    secondary: '#8b5cf6',
-    accent: '#06b6d4',
-    background: '#0f172a',
-    surface: '#1e293b',
-    surfaceElevated: '#334155',
-    surfaceGlass: 'rgba(30, 41, 59, 0.95)',
-    text: '#f1f5f9',
-    textSecondary: '#cbd5e1',
-    textMuted: '#94a3b8',
-    border: '#475569',
-    borderElevated: '#64748b',
-    success: '#10b981',
-    warning: '#f59e0b',
-    error: '#ef4444',
-    info: '#3b82f6',
-    glowIntensity: 0.25,
-    patternIntensity: 0.03,
-    gradients: {
-      primary: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
-      surface: 'linear-gradient(135deg, rgba(30, 41, 59, 0.98), rgba(51, 65, 85, 0.95))',
-      pattern: 'radial-gradient(circle at 2px 2px, rgba(99,102,241,0.03) 1px, transparent 0), linear-gradient(45deg, rgba(99, 102, 241, 0.02) 0%, transparent 30%), linear-gradient(-45deg, rgba(139, 92, 246, 0.02) 0%, transparent 30%)',
+
+  'kairos-light': {
+    name: 'kairos-light',
+    displayName: 'Kairos Light',
+    colors: {
+      primary: '#2563EB',      // Blue-600
+      secondary: '#7C3AED',    // Violet-600
+      accent: '#0891B2',       // Cyan-600
+      background: {
+        primary: '#FFFFFF',    // White
+        secondary: '#F8FAFC',  // Slate-50
+        tertiary: '#F1F5F9',   // Slate-100
+      },
+      text: {
+        primary: '#0F172A',    // Slate-900
+        secondary: '#475569',  // Slate-600
+        muted: '#64748B',      // Slate-500
+      },
+      border: {
+        primary: '#E2E8F0',    // Slate-200
+        secondary: '#CBD5E1',  // Slate-300
+      },
+      status: {
+        success: '#059669',    // Emerald-600
+        warning: '#D97706',    // Amber-600
+        error: '#DC2626',      // Red-600
+        info: '#2563EB',       // Blue-600
+      },
     },
-    shadows: {
-      sm: '0 1px 3px rgba(15, 23, 42, 0.8)',
-      md: '0 4px 12px rgba(15, 23, 42, 0.7)',
-      lg: '0 8px 24px rgba(15, 23, 42, 0.6)',
-      xl: '0 16px 48px rgba(15, 23, 42, 0.5)',
-      glow: '0 0 20px rgba(99, 102, 241, 0.25)',
+    cssVariables: {
+      '--color-primary': '37 99 235',
+      '--color-secondary': '124 58 237',
+      '--color-accent': '8 145 178',
+      '--color-background': '255 255 255',
+      '--color-surface': '248 250 252',
+      '--color-text': '15 23 42',
+    },
+  },
+
+  'kairos-purple': {
+    name: 'kairos-purple',
+    displayName: 'Kairos Purple',
+    colors: {
+      primary: '#8B5CF6',      // Violet-500
+      secondary: '#A855F7',    // Purple-500
+      accent: '#EC4899',       // Pink-500
+      background: {
+        primary: '#1E1B3A',    // Custom dark purple
+        secondary: '#2D2A4A',  // Custom purple
+        tertiary: '#3D3A5A',   // Custom light purple
+      },
+      text: {
+        primary: '#F3F4F6',    // Gray-100
+        secondary: '#D1D5DB',  // Gray-300
+        muted: '#9CA3AF',      // Gray-400
+      },
+      border: {
+        primary: '#4C4B6B',    // Custom border
+        secondary: '#5C5B7B',  // Custom light border
+      },
+      status: {
+        success: '#10B981',    // Emerald-500
+        warning: '#F59E0B',    // Amber-500
+        error: '#EF4444',      // Red-500
+        info: '#8B5CF6',       // Violet-500
+      },
+    },
+    cssVariables: {
+      '--color-primary': '139 92 246',
+      '--color-secondary': '168 85 247',
+      '--color-accent': '236 72 153',
+      '--color-background': '30 27 58',
+      '--color-surface': '45 42 74',
+      '--color-text': '243 244 246',
+    },
+  },
+
+  'kairos-blue': {
+    name: 'kairos-blue',
+    displayName: 'Kairos Blue',
+    colors: {
+      primary: '#3B82F6',      // Blue-500
+      secondary: '#1D4ED8',    // Blue-700
+      accent: '#06B6D4',       // Cyan-500
+      background: {
+        primary: '#0C1E3E',    // Custom dark blue
+        secondary: '#1E3A5F',  // Custom blue
+        tertiary: '#2E4A6F',   // Custom light blue
+      },
+      text: {
+        primary: '#F8FAFC',    // Slate-50
+        secondary: '#CBD5E1',  // Slate-300
+        muted: '#64748B',      // Slate-500
+      },
+      border: {
+        primary: '#3E5A7F',    // Custom border
+        secondary: '#4E6A8F',  // Custom light border
+      },
+      status: {
+        success: '#10B981',    // Emerald-500
+        warning: '#F59E0B',    // Amber-500
+        error: '#EF4444',      // Red-500
+        info: '#3B82F6',       // Blue-500
+      },
+    },
+    cssVariables: {
+      '--color-primary': '59 130 246',
+      '--color-secondary': '29 78 216',
+      '--color-accent': '6 182 212',
+      '--color-background': '12 30 62',
+      '--color-surface': '30 58 95',
+      '--color-text': '248 250 252',
+    },
+  },
+
+  'kairos-green': {
+    name: 'kairos-green',
+    displayName: 'Kairos Green',
+    colors: {
+      primary: '#10B981',      // Emerald-500
+      secondary: '#059669',    // Emerald-600
+      accent: '#14B8A6',       // Teal-500
+      background: {
+        primary: '#0F2A1E',    // Custom dark green
+        secondary: '#1F3A2E',  // Custom green
+        tertiary: '#2F4A3E',   // Custom light green
+      },
+      text: {
+        primary: '#F0FDF4',    // Green-50
+        secondary: '#BBFFD3',  // Custom light green
+        muted: '#6EE7B7',      // Emerald-300
+      },
+      border: {
+        primary: '#3F5A4E',    // Custom border
+        secondary: '#4F6A5E',  // Custom light border
+      },
+      status: {
+        success: '#10B981',    // Emerald-500
+        warning: '#F59E0B',    // Amber-500
+        error: '#EF4444',      // Red-500
+        info: '#14B8A6',       // Teal-500
+      },
+    },
+    cssVariables: {
+      '--color-primary': '16 185 129',
+      '--color-secondary': '5 150 105',
+      '--color-accent': '20 184 166',
+      '--color-background': '15 42 30',
+      '--color-surface': '31 58 46',
+      '--color-text': '240 253 244',
+    },
+  },
+
+  'kairos-orange': {
+    name: 'kairos-orange',
+    displayName: 'Kairos Orange',
+    colors: {
+      primary: '#F97316',      // Orange-500
+      secondary: '#EA580C',    // Orange-600
+      accent: '#F59E0B',       // Amber-500
+      background: {
+        primary: '#2A1F0F',    // Custom dark orange
+        secondary: '#3A2F1F',  // Custom orange
+        tertiary: '#4A3F2F',   // Custom light orange
+      },
+      text: {
+        primary: '#FFF7ED',    // Orange-50
+        secondary: '#FFEDD5',  // Orange-100
+        muted: '#FED7AA',      // Orange-200
+      },
+      border: {
+        primary: '#5A4F3F',    // Custom border
+        secondary: '#6A5F4F',  // Custom light border
+      },
+      status: {
+        success: '#10B981',    // Emerald-500
+        warning: '#F59E0B',    // Amber-500
+        error: '#EF4444',      // Red-500
+        info: '#F97316',       // Orange-500
+      },
+    },
+    cssVariables: {
+      '--color-primary': '249 115 22',
+      '--color-secondary': '234 88 12',
+      '--color-accent': '245 158 11',
+      '--color-background': '42 31 15',
+      '--color-surface': '58 47 31',
+      '--color-text': '255 247 237',
     },
   },
 };
 
+// ============================================================================
+// THEME CONTEXT
+// ============================================================================
+
 interface ThemeContextType {
   currentTheme: Theme;
-  themeName: string;
-  setTheme: (themeName: string) => void;
-  availableThemes: Record<string, Theme>;
+  currentThemeName: ThemeName;
+  setTheme: (themeName: ThemeName) => void;
+  availableThemes: Theme[];
   toggleTheme: () => void;
   isDarkMode: boolean;
-  themeConfig: {
-    animationDuration: number;
-    enableGlowEffects: boolean;
-    enablePatterns: boolean;
-    enableAnimations: boolean;
-  };
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
+// ============================================================================
+// THEME PROVIDER
+// ============================================================================
+
 interface ThemeProviderProps {
-  children: React.ReactNode;
+  children: ReactNode;
+  defaultTheme?: ThemeName;
 }
 
-export function ThemeProvider({ children }: ThemeProviderProps) {
-  const [themeName, setThemeName] = useState<string>(() => {
-    const saved = localStorage.getItem('kairos-theme');
-    return saved && themes[saved] ? saved : 'kairos-deep-black';
+export const ThemeProvider: React.FC<ThemeProviderProps> = ({
+  children,
+  defaultTheme = 'kairos-dark',
+}) => {
+  const [currentThemeName, setCurrentThemeName] = useState<ThemeName>(() => {
+    // Try to load theme from localStorage
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('kairos-theme') as ThemeName;
+      return saved && themes[saved] ? saved : defaultTheme;
+    }
+    return defaultTheme;
   });
 
-  const currentTheme = themes[themeName];
+  const currentTheme = themes[currentThemeName];
+  const isDarkMode = currentThemeName.includes('dark') || 
+                    currentThemeName === 'kairos-purple' || 
+                    currentThemeName === 'kairos-blue' ||
+                    currentThemeName === 'kairos-green' ||
+                    currentThemeName === 'kairos-orange';
 
-  // Theme configuration from environment variables
-  const themeConfig = {
-    animationDuration: parseInt(import.meta.env.VITE_ANIMATION_DURATION || '300'),
-    enableGlowEffects: import.meta.env.VITE_ENABLE_GLOW_EFFECTS === 'true',
-    enablePatterns: import.meta.env.VITE_ENABLE_GRADIENT_BACKGROUNDS === 'true',
-    enableAnimations: import.meta.env.VITE_ENABLE_SMOOTH_ANIMATIONS === 'true',
-  };
+  // Apply CSS variables to document root
+  useEffect(() => {
+    const root = document.documentElement;
+    
+    Object.entries(currentTheme.cssVariables).forEach(([property, value]) => {
+      root.style.setProperty(property, value);
+    });
 
-  const setTheme = (newThemeName: string) => {
-    if (themes[newThemeName]) {
-      setThemeName(newThemeName);
-      localStorage.setItem('kairos-theme', newThemeName);
+    // Save to localStorage
+    localStorage.setItem('kairos-theme', currentThemeName);
+
+    // Add theme class to body for any theme-specific styles
+    document.body.className = document.body.className
+      .replace(/kairos-theme-\w+/g, '')
+      .concat(` kairos-theme-${currentThemeName}`);
+  }, [currentTheme, currentThemeName]);
+
+  const setTheme = (themeName: ThemeName) => {
+    if (themes[themeName]) {
+      setCurrentThemeName(themeName);
     }
   };
 
   const toggleTheme = () => {
-    const themeNames = Object.keys(themes);
-    const currentIndex = themeNames.indexOf(themeName);
+    const themeNames = Object.keys(themes) as ThemeName[];
+    const currentIndex = themeNames.indexOf(currentThemeName);
     const nextIndex = (currentIndex + 1) % themeNames.length;
     setTheme(themeNames[nextIndex]);
   };
 
-  // Apply theme to CSS custom properties with enhanced properties
-  useEffect(() => {
-    const root = document.documentElement;
-    const theme = currentTheme;
-    
-    // Apply all theme properties
-    Object.entries(theme).forEach(([key, value]) => {
-      if (typeof value === 'string' && key !== 'name' && key !== 'displayName' && key !== 'description') {
-        root.style.setProperty(`--color-${key}`, value);
-      }
-    });
-
-    // Apply gradients
-    Object.entries(theme.gradients).forEach(([key, value]) => {
-      root.style.setProperty(`--gradient-${key}`, value);
-    });
-
-    // Apply shadows
-    Object.entries(theme.shadows).forEach(([key, value]) => {
-      root.style.setProperty(`--shadow-${key}`, value);
-    });
-
-    // Apply intensity values
-    root.style.setProperty('--glow-intensity', theme.glowIntensity.toString());
-    root.style.setProperty('--pattern-intensity', theme.patternIntensity.toString());
-
-    // Add theme class to body
-    document.body.className = `theme-${themeName}`;
-    
-    // Apply background pattern
-    if (themeConfig.enablePatterns) {
-      document.body.style.backgroundImage = theme.gradients.pattern;
-      document.body.style.backgroundSize = '40px 40px, 200% 200%, 200% 200%';
-    }
-
-    // Animation configuration
-    root.style.setProperty('--animation-duration', `${themeConfig.animationDuration}ms`);
-    
-    console.log(`🎨 Theme applied: ${theme.displayName}`);
-  }, [currentTheme, themeName, themeConfig]);
-
   const value: ThemeContextType = {
     currentTheme,
-    themeName,
+    currentThemeName,
     setTheme,
-    availableThemes: themes,
+    availableThemes: Object.values(themes),
     toggleTheme,
-    isDarkMode: true, // All themes are dark for now
-    themeConfig,
+    isDarkMode,
   };
 
   return (
@@ -262,53 +376,52 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
       {children}
     </ThemeContext.Provider>
   );
-}
+};
 
-export function useTheme() {
+// ============================================================================
+// THEME HOOK
+// ============================================================================
+
+export const useTheme = (): ThemeContextType => {
   const context = useContext(ThemeContext);
   if (context === undefined) {
     throw new Error('useTheme must be used within a ThemeProvider');
   }
   return context;
-}
-
-// Theme utility functions
-export const getThemeColor = (colorName: string, themeName?: string): string => {
-  const theme = themeName ? themes[themeName] : themes['kairos-deep-black'];
-  return (theme as any)[colorName] || '#ffffff';
 };
 
-export const generateThemeCSS = (theme: Theme): string => {
-  return `
-    :root {
-      --color-primary: ${theme.primary};
-      --color-secondary: ${theme.secondary};
-      --color-accent: ${theme.accent};
-      --color-background: ${theme.background};
-      --color-surface: ${theme.surface};
-      --color-surface-elevated: ${theme.surfaceElevated};
-      --color-surface-glass: ${theme.surfaceGlass};
-      --color-text: ${theme.text};
-      --color-text-secondary: ${theme.textSecondary};
-      --color-text-muted: ${theme.textMuted};
-      --color-border: ${theme.border};
-      --color-border-elevated: ${theme.borderElevated};
-      --color-success: ${theme.success};
-      --color-warning: ${theme.warning};
-      --color-error: ${theme.error};
-      --color-info: ${theme.info};
-      --gradient-primary: ${theme.gradients.primary};
-      --gradient-surface: ${theme.gradients.surface};
-      --gradient-pattern: ${theme.gradients.pattern};
-      --shadow-sm: ${theme.shadows.sm};
-      --shadow-md: ${theme.shadows.md};
-      --shadow-lg: ${theme.shadows.lg};
-      --shadow-xl: ${theme.shadows.xl};
-      --shadow-glow: ${theme.shadows.glow};
-      --glow-intensity: ${theme.glowIntensity};
-      --pattern-intensity: ${theme.patternIntensity};
-    }
-  `;
+// ============================================================================
+// THEME UTILITIES
+// ============================================================================
+
+export const getThemeColor = (colorPath: string, theme?: Theme): string => {
+  const currentTheme = theme || themes['kairos-dark'];
+  const paths = colorPath.split('.');
+  
+  let value: any = currentTheme.colors;
+  for (const path of paths) {
+    value = value?.[path];
+  }
+  
+  return value || '#000000';
 };
 
-export { themes };
+export const createThemeVariant = (
+  basetheme: ThemeName,
+  overrides: Partial<ThemeColors>
+): Theme => {
+  const base = themes[basetheme];
+  return {
+    ...base,
+    colors: {
+      ...base.colors,
+      ...overrides,
+    },
+  };
+};
+
+// ============================================================================
+// EXPORT DEFAULT
+// ============================================================================
+
+export default ThemeProvider;

@@ -1,0 +1,247 @@
+/* =============================================================================
+// KAIROS FRONTEND - SIMPLIFIED MAIN STYLESHEET
+// =============================================================================
+// Author: Sankhadeep Banerjee
+// Project: Kairos - Marketing Decisioning Solution
+// File: src/index.css
+// Purpose: Main stylesheet with Tailwind CSS imports and working custom styles
+// ============================================================================= */
+
+/* Tailwind CSS imports */
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/* =============================================================================
+// CUSTOM CSS VARIABLES (Theme System)
+// ============================================================================= */
+
+:root {
+  /* Default Kairos Dark Theme */
+  --color-primary: 59 130 246;       /* Blue-500 */
+  --color-secondary: 139 92 246;     /* Violet-500 */
+  --color-accent: 6 182 212;         /* Cyan-500 */
+  --color-background: 15 23 42;      /* Slate-900 */
+  --color-surface: 30 41 59;         /* Slate-800 */
+  --color-text: 248 250 252;         /* Slate-50 */
+  
+  /* Status Colors */
+  --color-success: 16 185 129;       /* Emerald-500 */
+  --color-warning: 245 158 11;       /* Amber-500 */
+  --color-error: 239 68 68;          /* Red-500 */
+  --color-info: 59 130 246;          /* Blue-500 */
+}
+
+/* =============================================================================
+// BASE STYLES
+// ============================================================================= */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  background: rgb(var(--color-background));
+  color: rgb(var(--color-text));
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* =============================================================================
+// KAIROS THEME CLASSES
+// ============================================================================= */
+
+.kairos-theme-kairos-dark {
+  --color-primary: 59 130 246;
+  --color-secondary: 139 92 246;
+  --color-accent: 6 182 212;
+  --color-background: 15 23 42;
+  --color-surface: 30 41 59;
+  --color-text: 248 250 252;
+}
+
+.kairos-theme-kairos-light {
+  --color-primary: 37 99 235;
+  --color-secondary: 124 58 237;
+  --color-accent: 8 145 178;
+  --color-background: 255 255 255;
+  --color-surface: 248 250 252;
+  --color-text: 15 23 42;
+}
+
+.kairos-theme-kairos-purple {
+  --color-primary: 139 92 246;
+  --color-secondary: 168 85 247;
+  --color-accent: 236 72 153;
+  --color-background: 30 27 58;
+  --color-surface: 45 42 74;
+  --color-text: 243 244 246;
+}
+
+.kairos-theme-kairos-blue {
+  --color-primary: 59 130 246;
+  --color-secondary: 29 78 216;
+  --color-accent: 6 182 212;
+  --color-background: 12 30 62;
+  --color-surface: 30 58 95;
+  --color-text: 248 250 252;
+}
+
+.kairos-theme-kairos-green {
+  --color-primary: 16 185 129;
+  --color-secondary: 5 150 105;
+  --color-accent: 20 184 166;
+  --color-background: 15 42 30;
+  --color-surface: 31 58 46;
+  --color-text: 240 253 244;
+}
+
+.kairos-theme-kairos-orange {
+  --color-primary: 249 115 22;
+  --color-secondary: 234 88 12;
+  --color-accent: 245 158 11;
+  --color-background: 42 31 15;
+  --color-surface: 58 47 31;
+  --color-text: 255 247 237;
+}
+
+/* =============================================================================
+// UTILITY LAYERS
+// ============================================================================= */
+
+@layer components {
+  /* Glass morphism effect */
+  .glass {
+    @apply bg-white/10 backdrop-blur-lg border border-white/20;
+  }
+
+  .glass-dark {
+    @apply bg-black/10 backdrop-blur-lg border border-black/20;
+  }
+
+  /* Button variants */
+  .btn-primary {
+    @apply bg-blue-500 text-white hover:bg-blue-600 transition-colors px-4 py-2 rounded-lg;
+  }
+
+  .btn-secondary {
+    @apply bg-violet-500 text-white hover:bg-violet-600 transition-colors px-4 py-2 rounded-lg;
+  }
+
+  .btn-ghost {
+    @apply bg-transparent border border-gray-600 text-gray-300 hover:bg-gray-800 transition-colors px-4 py-2 rounded-lg;
+  }
+
+  /* Card styles */
+  .card {
+    @apply bg-gray-900/50 backdrop-blur-xl border border-gray-800 rounded-2xl p-6;
+  }
+
+  .card-hover {
+    @apply card hover:bg-gray-900/70 transition-colors;
+  }
+
+  /* Focus styles */
+  .focus-ring {
+    @apply focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900;
+  }
+}
+
+@layer utilities {
+  /* Text gradients */
+  .text-gradient {
+    background: linear-gradient(135deg, rgb(var(--color-primary)) 0%, rgb(var(--color-secondary)) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Gradient backgrounds */
+  .gradient-primary {
+    background: linear-gradient(135deg, rgb(var(--color-primary)) 0%, rgb(var(--color-secondary)) 100%);
+  }
+
+  .gradient-surface {
+    background: linear-gradient(135deg, rgb(var(--color-surface)) 0%, rgb(var(--color-background)) 100%);
+  }
+}
+
+/* =============================================================================
+// SCROLLBAR STYLES
+// ============================================================================= */
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgb(var(--color-background));
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(var(--color-surface));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(var(--color-primary) / 0.7);
+}
+
+/* =============================================================================
+// ANIMATIONS
+// ============================================================================= */
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { 
+    transform: translateY(10px); 
+    opacity: 0; 
+  }
+  to { 
+    transform: translateY(0); 
+    opacity: 1; 
+  }
+}
+
+@keyframes shimmer {
+  0% { background-position: -1000px 0; }
+  100% { background-position: 1000px 0; }
+}
+
+/* =============================================================================
+// RESPONSIVE UTILITIES
+// ============================================================================= */
+
+@media (max-width: 640px) {
+  .mobile-hidden {
+    display: none;
+  }
+}
+
+@media (min-width: 1280px) {
+  .desktop-grid {
+    display: grid;
+  }
+}
+
+/* =============================================================================
+// PRINT STYLES
+// ============================================================================= */
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  body {
+    background: white !important;
+    color: black !important;
+  }
+}

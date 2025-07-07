@@ -1,0 +1,85 @@
+﻿// =============================================================================
+// KAIROS FRONTEND - VITE CONFIGURATION FOR TAILWIND CSS V4
+// =============================================================================
+// Author: Sankhadeep Banerjee
+// Project: Kairos - Marketing Decisioning Solution
+// File: vite.config.ts (Tailwind CSS v4 version)
+// Purpose: Vite configuration optimized for Tailwind CSS v4
+// =============================================================================
+
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import tailwindcss from '@tailwindcss/vite';
+import path from 'path';
+
+export default defineConfig({
+  plugins: [
+    react(),
+    tailwindcss(), // Tailwind CSS v4 Vite plugin
+  ],
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+      '@/components': path.resolve(__dirname, './src/components'),
+      '@/pages': path.resolve(__dirname, './src/pages'),
+      '@/contexts': path.resolve(__dirname, './src/contexts'),
+      '@/hooks': path.resolve(__dirname, './src/hooks'),
+      '@/stores': path.resolve(__dirname, './src/stores'),
+      '@/styles': path.resolve(__dirname, './src/styles'),
+      '@/types': path.resolve(__dirname, './src/types'),
+      '@/utils': path.resolve(__dirname, './src/utils'),
+      '@/assets': path.resolve(__dirname, './src/assets'),
+      '@/services': path.resolve(__dirname, './src/services'),
+    },
+  },
+  server: {
+    port: 5173,
+    host: true,
+    open: true,
+    hmr: {
+      overlay: true,
+    },
+  },
+  build: {
+    target: 'esnext',
+    minify: 'esbuild',
+    sourcemap: false,
+    outDir: 'dist',
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          // Core React
+          vendor: ['react', 'react-dom'],
+          
+          // Routing
+          router: ['react-router-dom'],
+          
+          // State Management & API
+          state: ['zustand', '@tanstack/react-query', 'immer'],
+          
+          // UI & Icons
+          ui: ['@heroicons/react', 'framer-motion'],
+          
+          // Utilities
+          utils: ['clsx', 'date-fns', 'lodash-es'],
+        },
+      },
+    },
+    chunkSizeWarningLimit: 1000,
+  },
+  optimizeDeps: {
+    include: [
+      'react',
+      'react-dom',
+      'react-router-dom',
+      '@tanstack/react-query',
+      'zustand',
+      'framer-motion',
+      '@heroicons/react/24/outline',
+      '@heroicons/react/24/solid',
+    ],
+  },
+  define: {
+    __DEV__: JSON.stringify(process.env.NODE_ENV === 'development'),
+  },
+});
