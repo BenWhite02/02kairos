@@ -1,43 +1,100 @@
 /* =============================================================================
- * KAIROS FRONTEND - EMERGENCY WORKING CSS (NO TAILWIND)
+ * KAIROS FRONTEND - CLEAN BLACK PATTERN CSS
  * =============================================================================
  * Author: Sankhadeep Banerjee
  * Project: Kairos - Marketing Decisioning Solution
- * File: src/index.css
+ * File: src/index.css (CLEAN BLACK WITH PATTERN)
  * ============================================================================= */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 /* Import Inter font */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
-/* Reset and base styles */
+/* CSS Custom Properties for Theme System */
+:root {
+  /* Kairos Dark Theme - Clean Black */
+  --color-primary: #00d9ff;
+  --color-secondary: #ff6b9d;
+  --color-accent: #00ff88;
+  --color-background: #0a0a0a;
+  --color-surface: #111111;
+  --color-text: #ffffff;
+  --color-text-secondary: #a0a0a0;
+  --color-border: #222222;
+  --color-success: #00ff88;
+  --color-warning: #ffb800;
+  --color-error: #ff4757;
+  --color-info: #00d9ff;
+}
+
+/* Base styles with subtle pattern on black */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
+html {
+  scroll-behavior: smooth;
+  font-feature-settings: 'cv11', 'ss01';
+  font-variation-settings: 'opsz' 32;
+}
+
 body {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  background-color: #0a0a0a;
-  color: #ffffff;
-  min-height: 100vh;
+  color: var(--color-text);
+  line-height: 1.6;
+  font-weight: 400;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  margin: 0;
+  min-height: 100vh;
+  
+  /* Clean black background with subtle pattern */
+  background-color: #0a0a0a;
+  background-image: 
+    /* Very subtle dot pattern */
+    radial-gradient(circle at 1px 1px, rgba(255,255,255,0.03) 1px, transparent 0),
+    /* Minimal accent gradients - much more subtle */
+    radial-gradient(circle at 20% 80%, rgba(0, 217, 255, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 107, 157, 0.03) 0%, transparent 50%);
+  background-size: 30px 30px, 100% 100%, 100% 100%;
 }
 
-/* Kairos color variables */
-:root {
-  --primary: #00d9ff;
-  --secondary: #ff6b9d;
-  --accent: #00ff88;
-  --bg: #0a0a0a;
-  --surface: #111111;
-  --border: #222222;
+/* Clean glass morphism */
+.glass {
+  background: rgba(17, 17, 17, 0.8);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
 }
 
-/* Basic layout classes */
+/* Clean card styles */
+.card {
+  background: rgba(17, 17, 17, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  transition: all 0.2s ease;
+}
+
+.card:hover {
+  border-color: rgba(255, 255, 255, 0.15);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+}
+
+/* All the utility classes */
 .min-h-screen { min-height: 100vh; }
-.bg-gray-950 { background-color: #0a0a0a; }
+.bg-gray-950 { background-color: transparent; }
 .text-gray-100 { color: #f3f4f6; }
 .flex { display: flex; }
 .items-center { align-items: center; }
@@ -95,72 +152,58 @@ body {
 .text-gray-300 { color: #d1d5db; }
 .text-gray-400 { color: #9ca3af; }
 .text-gray-500 { color: #6b7280; }
-.bg-gray-800 { background-color: #1f2937; }
-.bg-gray-900 { background-color: #111827; }
-.border-gray-700 { border-color: #374151; }
-.border-gray-800 { border-color: #1f2937; }
+.bg-gray-800 { background-color: rgba(31, 41, 55, 0.8); }
+.bg-gray-900 { background-color: rgba(17, 24, 39, 0.8); }
+.border-gray-700 { border-color: rgba(55, 65, 81, 0.8); }
+.border-gray-800 { border-color: rgba(31, 41, 55, 0.8); }
 
 /* Kairos specific styles */
 .gradient-primary {
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
 }
 
-.text-primary { color: var(--primary); }
-.bg-primary { background-color: var(--primary); }
-
-/* Glass morphism */
-.glass {
-  background: rgba(17, 17, 17, 0.8);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
+.text-primary { color: var(--color-primary); }
+.bg-primary { background-color: var(--color-primary); }
 
 /* Button styles */
 .btn-primary {
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
   color: white;
   padding: 0.75rem 1.5rem;
   border-radius: 0.75rem;
   border: none;
   font-weight: 500;
   cursor: pointer;
-  transition: opacity 0.2s;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 217, 255, 0.3);
 }
 
 .btn-primary:hover {
-  opacity: 0.9;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(0, 217, 255, 0.4);
 }
 
 /* Input styles */
 .input-field {
   width: 100%;
   padding: 0.75rem 1rem;
-  background-color: rgba(31, 41, 55, 0.5);
-  border: 1px solid #374151;
+  background: rgba(17, 17, 17, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 0.75rem;
   color: #f3f4f6;
   font-size: 1rem;
+  transition: all 0.2s ease;
 }
 
 .input-field:focus {
   outline: none;
-  border-color: var(--primary);
+  border-color: var(--color-primary);
   box-shadow: 0 0 0 2px rgba(0, 217, 255, 0.2);
+  background: rgba(17, 17, 17, 0.9);
 }
 
 .input-field::placeholder {
   color: #9ca3af;
-}
-
-/* Card styles */
-.card {
-  background: rgba(17, 17, 17, 0.8);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 1rem;
-  padding: 2rem;
 }
 
 /* Transitions */
@@ -172,27 +215,22 @@ body {
   transition: opacity 0.2s;
 }
 
-/* Focus states */
+.transition-all {
+  transition: all 0.2s ease;
+}
+
+/* Focus and hover states */
 .focus\\:outline-none:focus { outline: none; }
 .focus\\:ring-2:focus { box-shadow: 0 0 0 2px rgba(0, 217, 255, 0.5); }
-
-/* Hover states */
-.hover\\:text-primary:hover { color: var(--primary); }
+.hover\\:text-primary:hover { color: var(--color-primary); }
 .hover\\:opacity-90:hover { opacity: 0.9; }
-
-/* Background patterns */
-.bg-pattern {
-  background-image: 
-    radial-gradient(circle at 20% 80%, rgba(0, 217, 255, 0.15) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(255, 107, 157, 0.15) 0%, transparent 50%);
-}
 
 /* Loading spinner */
 .spinner {
   width: 2rem;
   height: 2rem;
   border: 2px solid rgba(0, 217, 255, 0.3);
-  border-top: 2px solid var(--primary);
+  border-top: 2px solid var(--color-primary);
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
