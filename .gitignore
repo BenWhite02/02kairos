@@ -1,0 +1,304 @@
+# =============================================================================
+# KAIROS FRONTEND - COMPREHENSIVE .GITIGNORE
+# =============================================================================
+# Author: Sankhadeep Banerjee
+# Project: Kairos - Marketing Decisioning Solution
+# Location: PROJECT_ROOT/.gitignore
+# Purpose: Keep repository clean and save only essential files
+# =============================================================================
+
+# =============================================================================
+# DEPENDENCIES & PACKAGE MANAGERS
+# =============================================================================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+.pnpm-debug.log*
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+.yarn/
+.pnp.*
+
+# =============================================================================
+# BUILD OUTPUTS & DISTRIBUTION
+# =============================================================================
+dist/
+dist-ssr/
+build/
+out/
+*.tsbuildinfo
+*.build/
+
+# =============================================================================
+# DEVELOPMENT & CACHE FILES
+# =============================================================================
+.vite/
+.turbo/
+.next/
+.nuxt/
+.cache/
+.temp/
+.tmp/
+*.cache
+.eslintcache
+.stylelintcache
+.parcel-cache/
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+
+# =============================================================================
+# LOGS & DEBUG FILES
+# =============================================================================
+*.log
+logs/
+pids/
+*.pid
+*.seed
+*.pid.lock
+lib-cov/
+coverage/
+nyc_output/
+.grunt/
+.lock-wscript
+
+# =============================================================================
+# TESTING & COVERAGE
+# =============================================================================
+coverage/
+*.lcov
+.nyc_output/
+lib-cov/
+.coverage
+.pytest_cache/
+.tox/
+.nox/
+htmlcov/
+.coverage.*
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+
+# Jest
+jest_output/
+__tests__/coverage/
+
+# =============================================================================
+# STORYBOOK & DOCUMENTATION
+# =============================================================================
+storybook-static/
+.storybook/build/
+docs/_build/
+docs/dist/
+.docusaurus/
+
+# =============================================================================
+# RUNTIME & PROCESS FILES
+# =============================================================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Thumbs.db:encryptable
+Desktop.ini
+
+# =============================================================================
+# EDITOR & IDE FILES
+# =============================================================================
+# VS Code
+.vscode/
+*.code-workspace
+.history/
+
+# JetBrains IDEs
+.idea/
+*.iml
+*.ipr
+*.iws
+.idea_modules/
+atlassian-ide-plugin.xml
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+*~
+.*.sw[a-p]
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# Nano
+*.save
+*.orig
+
+# =============================================================================
+# DEPLOYMENT & CI/CD
+# =============================================================================
+.vercel/
+.netlify/
+.firebase/
+.serverless/
+.fusebox/
+.dynamodb/
+.tern-port
+.aws-sam/
+
+# GitHub Actions
+.github/workflows/cache/
+
+# =============================================================================
+# ANALYTICS & MONITORING
+# =============================================================================
+.sentry-cli/
+.sentry/
+bundle-analyzer/
+analyzer/
+stats.json
+bundlesize.json
+
+# =============================================================================
+# TEMPORARY & BACKUP FILES
+# =============================================================================
+*.tmp
+*.temp
+*.bak
+*.backup
+*.old
+*.orig
+*.rej
+*~
+.#*
+#*#
+
+# =============================================================================
+# BINARY & MEDIA FILES (Large files that shouldn't be in repo)
+# =============================================================================
+*.mp4
+*.avi
+*.mov
+*.wmv
+*.flv
+*.webm
+*.mkv
+
+# Large images (keep smaller ones for UI)
+*.psd
+*.ai
+*.eps
+*.tiff
+*.tif
+*.raw
+
+# Audio files
+*.wav
+*.mp3
+*.ogg
+*.flac
+*.aac
+
+# Archives
+*.zip
+*.tar
+*.gz
+*.rar
+*.7z
+
+# =============================================================================
+# OPERATING SYSTEM FILES
+# =============================================================================
+# Windows
+Thumbs.db
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# =============================================================================
+# KEEP THESE FILES (Important: These should NOT be ignored)
+# =============================================================================
+# Environment files - KEEPING THESE FOR KAIROS PROJECT
+# .env files are typically ignored, but you want to save them
+# So we're NOT adding these to gitignore:
+# !.env
+# !.env.local
+# !.env.development
+# !.env.production
+# !.env.staging
+
+# =============================================================================
+# PROJECT-SPECIFIC IGNORES
+# =============================================================================
+# Kairos specific ignores
+/public/uploads/
+/public/temp/
+/src/assets/temp/
+*.local
+
+# Performance monitoring files
+lighthouse-report.html
+webpack-bundle-analyzer-report.html
+
+# Database files (if any local DBs used for development)
+*.db
+*.sqlite
+*.sqlite3
+
+# Docker (if added later)
+.dockerignore
+docker-compose.override.yml
+
+# Kubernetes (if added later)
+*.kubeconfig
